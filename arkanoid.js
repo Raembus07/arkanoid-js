@@ -25,10 +25,29 @@ var brickOffsetLeft = 30;
 var score = 0;
 
 var bricks = [];
-for (var c = 0; c < brickColumnCount; c++) {
+for(var c=0; c<brickColumnCount; c++) {
     bricks[c] = [];
-    for (var r = 0; r < brickRowCount; r++) {
+    for(var r=0; r<brickRowCount; r++) {
         bricks[c][r] = { x: 0, y: 0, status: 1 };
+    }
+}
+
+function collisionDetection() {
+    for(var c=0; c<brickColumnCount; c++) {
+        for(var r=0; r<brickRowCount; r++) {
+            var b = bricks[c][r];
+            if(b.status == 1) {
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                    score++;
+                    if(score == brickRowCount*brickColumnCount) {
+                        alert("Sie haben gewonnen, Herzlichen Glückwunsch!");
+                        document.location.reload();
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -99,6 +118,7 @@ function draw() {
     drawBall();
     drawPaddle();
     drawScore();
+    collisionDetection();
 
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
         dx = -dx;
