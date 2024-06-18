@@ -123,8 +123,7 @@ function draw() {
         if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
         } else {
-            alert("GAME OVER");
-            document.location.reload();
+            gameOver();
         }
     }
 
@@ -138,6 +137,22 @@ function draw() {
     }
 
     requestAnimationFrame(draw);
+}
+
+function gameOver() {
+    var modal = document.getElementById('gameOverModal');
+    modal.style.display = "block";
+
+    document.getElementById('restartButton').addEventListener('click', restartGame);
+    document.getElementById('exitButton').addEventListener('click', exitGame);
+}
+
+function restartGame() {
+    document.location.reload();
+}
+
+function exitGame() {
+    window.location.href = 'https://www.google.com';
 }
 
 draw();
